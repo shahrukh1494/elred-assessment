@@ -107,7 +107,7 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
             >
               {skills?.length || hobbies?.length || subjects?.length ? (
                 <>
-                  {skills?.length && (
+                  {skills?.length ? (
                     <>
                       <div>
                         I am incredible at these skills / professionally great
@@ -126,9 +126,9 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
                         ))}
                       </div>
                     </>
-                  )}
+                  ) : null}
 
-                  {hobbies?.length && (
+                  {hobbies?.length ? (
                     <>
                       <div>Hobbies I am passionate about</div>
                       <div className="flex space-x-1 rounded-md py-2 space-y-1 h-20 overflow-x-scroll">
@@ -144,9 +144,9 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
                         ))}
                       </div>
                     </>
-                  )}
+                  ) : null}
 
-                  {subjects?.length && (
+                  {subjects?.length ? (
                     <>
                       <div>My favourite subjects are</div>
                       <div className="flex space-x-1 rounded-md py-2 space-y-1 h-20 overflow-x-scroll">
@@ -162,7 +162,7 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
                         ))}
                       </div>
                     </>
-                  )}
+                  ) : null}
                 </>
               ) : (
                 "No soft skills added yet"
