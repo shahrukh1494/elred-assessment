@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import EditAboutPage from "./EditAboutPage";
 import ViewResume from "./ViewResume";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { PencilIcon } from "@heroicons/react/24/solid";
+import EditSkills from "./EditSkills";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PencilIcon,
+} from "@heroicons/react/24/solid";
 
 const BioPage = ({ editAboutMe, setEditAboutMe }) => {
   const [aboutText, setAboutText] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [resume, setResume] = useState(null);
   const [viewResume, setViewResume] = useState(false);
+  const [editSkills, setEditSkills] = useState(false);
+  const [skills, setSkills] = useState([]);
+  const [hobbies, setHobbies] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   return (
     <>
@@ -24,6 +32,16 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
         />
       ) : viewResume ? (
         <ViewResume resume={resume} setViewResume={setViewResume} />
+      ) : editSkills ? (
+        <EditSkills
+          skills={skills}
+          setSkills={setSkills}
+          hobbies={hobbies}
+          setHobbies={setHobbies}
+          subjects={subjects}
+          setSubjects={setSubjects}
+          setEditSkills={setEditSkills}
+        />
       ) : (
         <div>
           <div className="flex bio-header">
@@ -35,7 +53,7 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
             <div className="flex justify-between about-text">
               <div className="font-bold">About me </div>
               <PencilIcon
-                className="icon cursor-pointer"
+                className="icon cursor-pointer mt-1"
                 onClick={() => setEditAboutMe(true)}
               />
             </div>
@@ -71,6 +89,87 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
             <ChevronRightIcon className="icon icon mt-1" />
           </div>
           <div className="mt-4 border-b-[1px] border-gray-300"></div>
+
+          <div className="pb-2">
+            <div className="flex justify-between about-text">
+              <div className="font-bold">Skills </div>
+              <PencilIcon
+                className="icon cursor-pointer flex items-center mt-1"
+                onClick={() => setEditSkills(true)}
+              />
+            </div>
+            <div
+              className={`${
+                skills?.length || hobbies?.length || subjects?.length
+                  ? ""
+                  : "text-gray-400 text-center text-sm"
+              } `}
+            >
+              {skills?.length || hobbies?.length || subjects?.length ? (
+                <>
+                  {skills?.length && (
+                    <>
+                      <div>
+                        I am incredible at these skills / professionally great
+                        at
+                      </div>
+                      <div className="flex space-x-1 rounded-md py-2 space-y-1 h-20 overflow-x-scroll">
+                        {skills.map((item) => (
+                          <div
+                            key={item?._id}
+                            className="w-fit flex bg-blue-500 rounded-full py-1 px-4 text-sm text-white gap-2"
+                          >
+                            <span className="cursor-pointer">
+                              {item?.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {hobbies?.length && (
+                    <>
+                      <div>Hobbies I am passionate about</div>
+                      <div className="flex space-x-1 rounded-md py-2 space-y-1 h-20 overflow-x-scroll">
+                        {hobbies.map((item) => (
+                          <div
+                            key={item?._id}
+                            className="w-fit flex bg-blue-500 rounded-full py-1 px-4 text-sm text-white gap-2"
+                          >
+                            <span className="cursor-pointer">
+                              {item?.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {subjects?.length && (
+                    <>
+                      <div>My favourite subjects are</div>
+                      <div className="flex space-x-1 rounded-md py-2 space-y-1 h-20 overflow-x-scroll">
+                        {subjects.map((item) => (
+                          <div
+                            key={item?._id}
+                            className="w-fit flex bg-blue-500 rounded-full py-1 px-4 text-sm text-white gap-2"
+                          >
+                            <span className="cursor-pointer">
+                              {item?.value}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                "No soft skills added yet"
+              )}
+              <div className="mt-4 border-b-2"></div>
+            </div>
+          </div>
         </div>
       )}
     </>
