@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditAboutPage from "./EditAboutPage";
 import ViewResume from "./ViewResume";
+import EthicalRatings from "./EthicalRatings";
 import EditSkills from "./EditSkills";
+import VirtuallyMetRatings from "./VirtuallyMetRatings";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   PencilIcon,
+  StarIcon,
 } from "@heroicons/react/24/solid";
 
 const BioPage = ({ editAboutMe, setEditAboutMe }) => {
@@ -17,6 +20,32 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
   const [skills, setSkills] = useState([]);
   const [hobbies, setHobbies] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [ethicalCode, setEthicalCode] = useState(false);
+  const [ethicalData, setEthicalData] = useState(false);
+  const [ethicalCount, setEthicalCount] = useState(0);
+  const [virtuallyMet, setVirtuallyMet] = useState(false);
+  const [virtaullyCount, setVirtuallyCount] = useState(0);
+  const [virtuallyData, setVirtuallyData] = useState([]);
+
+  useEffect(() => {
+    fetch(
+      "https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsVirtuallyMetResponse.json"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setVirtuallyData(data.result);
+        setVirtuallyCount(data.result.length);
+      });
+
+    fetch(
+      "https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsEthicalCodeResponse.json"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setEthicalData(data.result);
+        setEthicalCount(data.result.length);
+      });
+  }, []);
 
   return (
     <>
@@ -41,6 +70,17 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
           subjects={subjects}
           setSubjects={setSubjects}
           setEditSkills={setEditSkills}
+        />
+      ) : ethicalCode ? (
+        <EthicalRatings
+          setEthicalCode={setEthicalCode}
+          ethicalData={ethicalData}
+        />
+      ) : virtuallyMet ? (
+        <VirtuallyMetRatings
+          virtuallyData={virtuallyData}
+          setVirtuallyMet={setVirtuallyMet}
+          setVirtaullyCount={setVirtuallyCount}
         />
       ) : (
         <div>
@@ -168,6 +208,33 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
                 "No soft skills added yet"
               )}
               <div className="mt-4 border-b-2"></div>
+            </div>
+          </div>
+          <div className=" bg-gray-400 bottom-0">
+            <div className="text-white p-2">
+              <StarIcon className="absolute ml-[40%] opacity-60 mt-4 h-10 w-10 text-white rounded-full bg-gray-700" />
+              <div className="bg-gray-500 rounded-md p-1 mt-8">
+                <div className="px-2">Ratings</div>
+                <div
+                  onClick={() => setEthicalCode(true)}
+                  className="flex cursor-pointer space-x-4 mt-4 pb-4 px-4 border-white border-b-2"
+                >
+                  <div className="flex items-center">{ethicalCount}</div>
+                  <div className="text-sm pl-2">
+                    Say has ethical code of conduct and is safe to do business
+                    with
+                  </div>
+                </div>
+                <div
+                  onClick={() => setVirtuallyMet(true)}
+                  className="flex space-x-4 mt-4 px-4 cursor-pointer"
+                >
+                  <div>{virtaullyCount}</div>
+                  <div className="text-sm pl-2 pb-6">
+                    Have met in real life/Video call
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
