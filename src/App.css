@@ -1,1 +1,34 @@
+body {
+  height: 812px;
+  width: 375px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
 
+.bio-header {
+  padding-top: 16px;
+  margin-bottom: 12px;
+}
+
+.biotext {
+  margin-left: 8px;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+.about-text {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-style: bold;
+  justify-content: space-between;
+}
+
+.blood-group-header {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  justify-content: space-between;
+  font: bold;
+}
