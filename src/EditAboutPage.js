@@ -20,9 +20,15 @@ const EditAboutPage = ({
   const [tempBloodGroup, setTempBloodGroup] = useState(bloodGroup);
   const [submitCheck, setSubmitCheck] = useState(true);
   const [popup, setPopup] = useState(false);
+  const [uploadError, setUploadError] = useState(false);
 
   const uploadResume = (e) => {
-    setTempResume(e.target.files[0]);
+    if (e.target?.files[0]?.size > 5242880) {
+      setUploadError(true);
+    } else {
+      setTempResume(e.target.files[0]);
+      setUploadError(false);
+    }
   };
 
   const onSubmit = () => {
@@ -59,8 +65,8 @@ const EditAboutPage = ({
       <div className="py-4">Write something about yourself</div>
       <div>
         <textarea
-          minlength="3"
-          maxlength="500"
+          minLength="3"
+          maxLength="500"
           value={about}
           onChange={(e) => {
             setAbout(e.target.value);
@@ -139,6 +145,12 @@ const EditAboutPage = ({
           </div>
         </div>
       </div>
+      {uploadError && (
+        <div className="text-red-400 text-xs">
+          Please upload pdf file of max size 5mb
+        </div>
+      )}
+
       <div className="mt-2">
         <div>Blood Group</div>
         <select

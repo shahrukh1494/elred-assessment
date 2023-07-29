@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EditAboutPage from "./EditAboutPage";
+import ViewResume from "./ViewResume";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { PencilIcon } from "@heroicons/react/24/solid";
 
@@ -7,6 +8,7 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
   const [aboutText, setAboutText] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [resume, setResume] = useState(null);
+  const [viewResume, setViewResume] = useState(false);
 
   return (
     <>
@@ -20,6 +22,8 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
           resume={resume}
           setResume={setResume}
         />
+      ) : viewResume ? (
+        <ViewResume resume={resume} setViewResume={setViewResume} />
       ) : (
         <div>
           <div className="flex bio-header">
@@ -47,15 +51,12 @@ const BioPage = ({ editAboutMe, setEditAboutMe }) => {
 
           <div className="flex blood-group-header justify-between mb-8">
             <div className="font-bold">Blood Group</div>
-            <div
-              className="font-bold text-gray-400 cursor-pointer"
-              onClick={() => setEditAboutMe(true)}
-            >
+            <div className="font-bold text-gray-400">
               {bloodGroup ? bloodGroup : ""}
             </div>
           </div>
           <div
-            onClick={() => setEditAboutMe(true)}
+            onClick={() => setViewResume(true)}
             className="flex cursor-pointer justify-between py-4 px-4 shadow-md rounded-md border-[1px]"
           >
             <div className="flex gap-3">
